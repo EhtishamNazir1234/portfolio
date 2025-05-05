@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
-import logo from "../assets/logo.png";
+// import logo from "../assets/logo.png";
 // import { FaLinkedin } from "react-icons/fa";
 // import { FaGithub } from "react-icons/fa";
 // import { FaSquareXTwitter } from "react-icons/fa6";
@@ -17,6 +17,19 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleResumeDownload = () => {
+    // Update this path to match your resume file name
+    const resumePath = "/EhtishamNazirResume.pdf";
+    
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = resumePath;
+    link.download = "EhtishamNazirResume.pdf"; // Change to your preferred download filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const navItems = [
     { name: "Home", to: "hero" },
@@ -36,7 +49,7 @@ const Navbar = () => {
           : "bg-transparent "
       }`}
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto py-3 px-6">
         <div className="flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0 }}
@@ -72,6 +85,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
+            onClick={handleResumeDownload}
             className="hidden md:block px-6 py-2 rounded-full border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-neutral-900 transition-all"
           >
             Resume
