@@ -37,7 +37,12 @@ const Projects = () => {
   ];
 
   return (
-    <section className={`${theme.background} ${theme.text} border-b ${theme.border}`}>
+    <section 
+      id="projects1"  // This ID must match exactly with the 'to' prop in navItems
+      className={`pt-20 ${
+        isDark ? 'bg-neutral-900 text-white' : 'bg-white text-neutral-900'
+      }`}
+    >
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

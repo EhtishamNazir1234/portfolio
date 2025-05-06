@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   darkMode: 'class',
   theme: {
     extend: {
@@ -8,6 +11,9 @@ module.exports = {
         neutral: {
           950: '#0a0a0a',
         },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
       },
     },
   },
