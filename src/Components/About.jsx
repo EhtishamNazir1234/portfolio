@@ -10,7 +10,7 @@ const About = () => {
   return (
     <section className={`${theme.background} ${theme.text}`}>
       <div className="border-b border-neutral-900 pb-4  ">
-        <h1 className="my-10 text-center text-4xl">
+        <h1 className=" text-center text-4xl">
           About <span className="text-neutral-500">Me</span>
         </h1>
         <div className="flex flex-wrap">
