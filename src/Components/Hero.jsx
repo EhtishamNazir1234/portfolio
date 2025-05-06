@@ -1,8 +1,18 @@
 import React from "react";
 import profilePic from "../assets/me.jpg"
 
+import { useTheme } from "../context/ThemeContext";
 const Hero = () => {
+  const { isDark } = useTheme();
   return (
+     <section
+        id="projects"
+        className={`border-b ${
+          isDark
+            ? "border-neutral-800 bg-neutral-900 text-white"
+            : "border-gray-200 bg-white text-neutral-900"
+        }`}
+      >
     <div className="border-b   border-neutral-900 pb-4 lg:mb-35">
       <div className="flex flex-wrap lg:flex-nowrap items-center mx-10">
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
@@ -10,7 +20,7 @@ const Hero = () => {
             Ehtisham Nazir
           </h1>
           <span className="bg-gradient-to-r from-pink-300 via-slate-500 to-purple-500 bg-clip-text text-4xl tracking-tight text-transparent">
-            Front-End Developer
+            Full Stack Developer
           </span>
           <p className="my-2 max-w-xl py-6 font-light tracking-tighter">
             As a dedicated front-end developer specializing in React, I focus on
@@ -32,6 +42,7 @@ const Hero = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 

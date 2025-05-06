@@ -1,7 +1,7 @@
 import React from "react";
 // import { RiReactjsLine } from "react-icons/ri";
 // import { TbBrandNextjs } from "react-icons/tb";
-
+import {  useTheme } from "../context/ThemeContext";
 const experiences = [
   {
     role: "Full Stack Developer",
@@ -14,9 +14,18 @@ const experiences = [
 ];
 
 const Experience = () => {
+  const { isDark } = useTheme();
   return (
-    <div className="border-b border-neutral-900 pb-4 pt-24"> {/* Added pt-24 for top padding */}
-      <h2 className="text-4xl text-center my-20">Experience</h2>
+     <section
+      id="projects"
+      className={`border-b ${
+        isDark
+          ? "border-neutral-800 bg-neutral-900 text-white"
+          : "border-gray-200 bg-white text-neutral-900"
+      }`}
+    >
+    <div className="border-b border-neutral-900 pb-4 "> {/* Added pt-24 for top padding */}
+      <h2 className="text-4xl text-center my-10">Experience</h2>
       <div className="max-w-5xl mx-auto px-4">
         {experiences.map((experience, index) => (
           <div
@@ -47,6 +56,7 @@ const Experience = () => {
         ))}
       </div>
     </div>
+    </section>
   );
 };
 

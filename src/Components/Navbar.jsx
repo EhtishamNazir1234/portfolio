@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
-// import logo from "../assets/logo.png";
-// import { FaLinkedin } from "react-icons/fa";
-// import { FaGithub } from "react-icons/fa";
-// import { FaSquareXTwitter } from "react-icons/fa6";
-// import { FaInstagram } from "react-icons/fa";
+import { useTheme } from '../context/ThemeContext';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 const Navbar = () => {
+  const { isDark, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -36,6 +34,8 @@ const Navbar = () => {
     { name: "About", to: "about" },
     { name: "Skills", to: "technologies" },
     { name: "Experience", to: "experience" },
+    { name: "Projects", to: "projects" },
+    { name: "Contact", to: "contact" },
   ];
 
   return (
@@ -43,10 +43,12 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed  w-full z-50 transition-all duration-300 ${
+      className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-neutral-900/80 backdrop-blur-md py-4"
-          : "bg-transparent "
+          ? isDark 
+            ? "bg-neutral-900/80 backdrop-blur-md py-4"
+            : "bg-white/80 backdrop-blur-md py-4"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto py-3 px-6">
@@ -61,6 +63,17 @@ const Navbar = () => {
           </motion.div>
 
           <div className="hidden md:flex items-center  space-x-8">
+            <motion.button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full ${
+                isDark ? 'text-yellow-400' : 'text-neutral-600'
+              }`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {isDark ? <FaSun size={20} /> : <FaMoon size={20} />}
+            </motion.button>
+
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
