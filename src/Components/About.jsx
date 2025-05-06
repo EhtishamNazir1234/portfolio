@@ -1,5 +1,5 @@
 import React from "react";
-import profilePic from"../assets/image.png"
+import profilePic from"../assets/image2.jpg"
 import { useTheme } from "../context/ThemeContext";
 import { getThemeClasses } from "../utils/themeClasses";
 
