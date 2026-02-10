@@ -9,7 +9,7 @@ const About = () => {
 
   return (
     <section className={`${theme.background} ${theme.text}`}>
-      <div className="border-b border-neutral-900 pb-4  ">
+      <div className="py-24 max-w-6xl mx-auto px-4">
         <h1 className=" text-center text-4xl">
           About <span className="text-neutral-500">Me</span>
         </h1>
@@ -25,7 +25,7 @@ const About = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <div className="flex justify-center lg:justify-start">
-              <p className="mx-20 mt-20  text-wrap text-justify">
+              <p className="mx-6 mt-10 lg:mx-20 lg:mt-20 text-wrap text-justify">
                 Ehtisham Nazir here, a passionate software developer with a BS
                 in IT from M.A.O Postgraduate College (affiliated with the
                 University of the Punjab). I bring a blend of skills in React,

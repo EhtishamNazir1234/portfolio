@@ -16,17 +16,14 @@ const experiences = [
 const Experience = () => {
   const { isDark } = useTheme();
   return (
-     <section
-      id="projects"
-      className={`border-b ${
-        isDark
-          ? "border-neutral-800 bg-neutral-900 text-white"
-          : "border-gray-200 bg-white text-neutral-900"
+    <section
+      className={`${
+        isDark ? "bg-transparent text-white" : "bg-white text-neutral-900"
       }`}
     >
-    <div className="border-b border-neutral-900 pb-4 "> {/* Added pt-24 for top padding */}
-      <h2 className="text-4xl text-center my-10">Experience</h2>
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="py-24">
+        <h2 className="text-4xl text-center my-10">Experience</h2>
+        <div className="max-w-6xl mx-auto px-4">
         {experiences.map((experience, index) => (
           <div
             key={index}
@@ -40,7 +37,9 @@ const Experience = () => {
                 {experience.role}-{experience.company}
               </h3>
 
-              <p className="text-neutral-300 mb-5 font-light">{experience.description}</p>
+              <p className="text-neutral-300 mb-5 font-light">
+                {experience.description}
+              </p>
               <div className="flex gap-3">
                 {experience.technologies.map((tech, idx) => (
                   <span
@@ -54,8 +53,8 @@ const Experience = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
-    </div>
     </section>
   );
 };

@@ -58,10 +58,8 @@ const Technologies = () => {
   ];
 
   return (
-    <section
-      className={`${theme.background} ${theme.text} border-b ${theme.border}`}
-    >
-      <div className="border-b border-neutral-800 pb-24">
+    <section className={`${theme.background} ${theme.text}`}>
+      <div className="py-24 max-w-6xl mx-auto px-4">
         <h1 className="my-20 text-center text-4xl">Technologies</h1>
         <div className="flex flex-wrap items-center justify-center gap-8">
           {technologies.map((tech, index) => (

@@ -5,16 +5,13 @@ import { useTheme } from "../context/ThemeContext";
 const Hero = () => {
   const { isDark } = useTheme();
   return (
-     <section
-        id="projects"
-        className={`border-b ${
-          isDark
-            ? "border-neutral-800 bg-neutral-900 text-white"
-            : "border-gray-200 bg-white text-neutral-900"
-        }`}
-      >
-    <div className="border-b   border-neutral-900 pb-4 lg:mb-35">
-      <div className="flex flex-wrap lg:flex-nowrap items-center mx-10">
+    <section
+      className={`${
+        isDark ? "bg-transparent text-white" : "bg-white text-neutral-900"
+      }`}
+    >
+      <div className="py-24 max-w-6xl mx-auto px-4">
+        <div className="flex flex-wrap lg:flex-nowrap items-center">
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
           <h1 className="pb-16 text-6xl font-thin tracking-tight lg:mt-16 lg:text-8xl  ">
             Ehtisham Nazir
@@ -41,7 +38,7 @@ const Hero = () => {
           />
         </div>
       </div>
-    </div>
+</div>
     </section>
   );
 };

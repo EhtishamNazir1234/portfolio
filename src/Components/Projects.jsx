@@ -37,10 +37,10 @@ const Projects = () => {
   ];
 
   return (
-    <section 
-      id="projects1"  // This ID must match exactly with the 'to' prop in navItems
+    <section
+      id="projects1" // This ID must match exactly with the 'to' prop in navItems
       className={`pt-20 ${
-        isDark ? 'bg-neutral-900 text-white' : 'bg-white text-neutral-900'
+        isDark ? "bg-transparent text-white" : "bg-white text-neutral-900"
       }`}
     >
       <motion.h2
@@ -52,7 +52,7 @@ const Projects = () => {
         Projects
       </motion.h2>
 
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <motion.div
             key={index}
