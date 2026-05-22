@@ -1,78 +1,77 @@
-import React from "react";
-import Navbar from "./Components/Navbar";
-import Hero from "./Components/Hero";
+import { useEffect, useState } from "react";
+import Header from "./Components/Header";
+import Home from "./Components/Home";
 import About from "./Components/About";
-import Technologies from "./Components/Technologies";
-import Experience from "./Components/Expererience";
+import Skills from "./Components/Skills";
+import Qualification from "./Components/Qualification";
+import Services from "./Components/Services";
+import Portfolio from "./Components/Portfolio";
+import Project from "./Components/Project";
+import Testimonial from "./Components/Testimonial";
 import Contact from "./Components/Contact";
-import Projects from "./Components/Projects";
+import Footer from "./Components/Footer";
+import ScrollUp from "./Components/ScrollUp";
+import LoaderThree from "./Components/LoaderThree";
+import { Toaster } from "react-hot-toast";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-import DotPattern from "./Components/DotPattern";
+import { usePortfolioUI } from "./hooks/usePortfolioUI";
 
 const AppContent = () => {
   const { isDark } = useTheme();
+  const [isPreloading, setIsPreloading] = useState(true);
+  usePortfolioUI(isDark);
 
-  const content = (
-    <>
-      <Navbar />
-      <main className="pt-16">
-        <div>
-          <section id="hero" className="min-h-screen pt-16">
-            <Hero />
-          </section>
-          <section id="about" className="pt-24">
-            <About />
-          </section>
-          <section id="technologies" className="pt-24">
-            <Technologies />
-          </section>
-          <section id="experience" className="pt-24">
-            <Experience />
-          </section>
-          <section id="projects1" className="min-h-screen pt-10">
-            <Projects />
-          </section>
-          <section id="contact" className="pt-24">
-            <Contact />
-          </section>
-        </div>
-      </main>
-    </>
-  );
-  
-  return (
-    <main
-      className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "bg-neutral-900" : "bg-white"
-      }`}
-    >
-      <div
-        className={`overflow-x-hidden antialiased selection:bg-cyan-300 selection:text-cyan-900 ${
-          isDark ? "text-neutral-300" : "text-neutral-800"
-        }`}
-      >
-        <DotPattern
-          className={
-            isDark
-              ? "bg-neutral-950"
-              : "bg-gray-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0))]"
-          }
-          baseColor={isDark ? "#404040" : "#e5e5e5"}
-          glowColor={isDark ? "#22d3ee" : "#0ea5e9"}
-        >
-          {content}
-        </DotPattern>
+  useEffect(() => {
+    const timer = setTimeout(() => setIsPreloading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isPreloading) {
+    return (
+      <div className="app-preloader" role="status" aria-live="polite">
+        <LoaderThree />
       </div>
-    </main>
+    );
+  }
+
+  return (
+    <div className="app-root">
+      <div className="global-dotted-glow" aria-hidden="true" />
+      <div className="app-content">
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "rgba(20, 17, 38, 0.95)",
+              color: "#f3f0ff",
+              border: "1px solid rgba(122, 92, 255, 0.35)",
+              backdropFilter: "blur(6px)",
+            },
+          }}
+        />
+        <Header />
+        <main className="main">
+          <Home />
+          <About />
+          <Skills />
+          <Qualification />
+          <Services />
+          <Portfolio />
+          <Project />
+          <Testimonial />
+          <Contact />
+        </main>
+        <Footer />
+        <ScrollUp />
+      </div>
+    </div>
   );
 };
 
-const App = () => {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
-  );
-};
+const App = () => (
+  <ThemeProvider>
+    <AppContent />
+  </ThemeProvider>
+);
 
 export default App;

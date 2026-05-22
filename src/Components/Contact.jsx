@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { useTheme } from '../context/ThemeContext';
+import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import toast from "react-hot-toast";
+import { contact as contactInfo } from "../data/portfolioData";
+import MagneticButton from "./MagneticButton";
+
 const Contact = () => {
-  const { isDark } = useTheme();
-  useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-  }, []);
+  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    project: "",
+    message: "",
   });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (PUBLIC_KEY) emailjs.init(PUBLIC_KEY);
+  }, [PUBLIC_KEY]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,57 +27,109 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+    const project = formData.project.trim();
+
+    if (!name) {
+      toast.error("Please enter your name.");
+      return;
+    }
+
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    if (!project) {
+      toast.error("Please tell me your project title/type.");
+      return;
+    }
+
+    if (!message) {
+      toast.error("Please enter your message.");
+      return;
+    }
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      toast.error(
+        "Email service is not configured. Add EmailJS keys in .env and restart dev server."
+      );
+      return;
+    }
+
     setLoading(true);
 
     try {
       const response = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, // Add template ID here
+        SERVICE_ID,
+        TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_name: 'Ehtisham Nazir', // Add recipient name
+          from_name: name,
+          from_email: email,
+          reply_to: email,
+          project,
+          subject: project,
+          message,
+          to_name: "Ehtisham Nazir",
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        PUBLIC_KEY
       );
 
       if (response.status === 200) {
-        alert('Message sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
+        toast.success("Message sent successfully!");
+        setFormData({ name: "", email: "", project: "", message: "" });
       }
     } catch (error) {
-      console.error('Error details:', error);
-      alert(`Failed to send message: ${error.message}`);
+      console.error("Error details:", error);
+      const details =
+        error?.text || error?.message || "Check EmailJS service/template IDs.";
+      toast.error(`Failed to send message: ${details}`);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section
-      className={`${
-        isDark ? "bg-transparent text-white" : "bg-white text-neutral-900"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl mx-auto"
-        >
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Get In Touch
-          </h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <section className="contact section" id="contact">
+      <h2 className="section__title">Contact Me</h2>
+      <span className="section__subtitle">Get in touch</span>
+
+      <div className="contact__container container grid">
+        <div>
+          <div className="contact__information">
+            <i className="uil uil-phone contact__icon"></i>
             <div>
-              <label
-                htmlFor="name"
-                className={`block mb-2 ${
-                  isDark ? "text-neutral-300" : "text-neutral-700"
-                }`}
-              >
+              <h3 className="contact__title">Call Me</h3>
+              <span className="contact__subtitle">{contactInfo.phone}</span>
+            </div>
+          </div>
+          <div className="contact__information">
+            <i className="uil uil-envelope contact__icon"></i>
+            <div>
+              <h3 className="contact__title">Email</h3>
+              <span className="contact__subtitle">{contactInfo.email}</span>
+            </div>
+          </div>
+          <div className="contact__information">
+            <i className="uil uil-map-marker contact__icon"></i>
+            <div>
+              <h3 className="contact__title">Location</h3>
+              <span className="contact__subtitle">{contactInfo.location}</span>
+            </div>
+          </div>
+        </div>
+
+        <form className="contact__form grid" onSubmit={handleSubmit} noValidate>
+          <div className="contact__inputs grid">
+            <div className="contact__content">
+              <label htmlFor="name" className="contact__label">
                 Name
               </label>
               <input
@@ -80,21 +138,12 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-cyan-400 ${
-                  isDark
-                    ? "bg-neutral-800 border-neutral-700 text-white"
-                    : "bg-white border-neutral-300 text-neutral-900"
-                }`}
+                placeholder="Enter your name"
+                className="contact__input"
               />
             </div>
-            <div>
-              <label
-                htmlFor="email"
-                className={`block mb-2 ${
-                  isDark ? "text-neutral-300" : "text-neutral-700"
-                }`}
-              >
+            <div className="contact__content">
+              <label htmlFor="email" className="contact__label">
                 Email
               </label>
               <input
@@ -103,48 +152,50 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-cyan-400 ${
-                  isDark
-                    ? "bg-neutral-800 border-neutral-700 text-white"
-                    : "bg-white border-neutral-300 text-neutral-900"
-                }`}
+                placeholder="Enter your email"
+                className="contact__input"
               />
             </div>
-            <div>
-              <label
-                htmlFor="message"
-                className={`block mb-2 ${
-                  isDark ? "text-neutral-300" : "text-neutral-700"
-                }`}
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="4"
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-cyan-400 ${
-                  isDark
-                    ? "bg-neutral-800 border-neutral-700 text-white"
-                    : "bg-white border-neutral-300 text-neutral-900"
-                }`}
-              ></textarea>
-            </div>
-            <motion.button
+          </div>
+          <div className="contact__content">
+            <label htmlFor="project" className="contact__label">
+              Project
+            </label>
+            <input
+              type="text"
+              id="project"
+              name="project"
+              value={formData.project}
+              onChange={handleChange}
+              placeholder="Project title or type"
+              className="contact__input"
+            />
+          </div>
+          <div className="contact__content">
+            <label htmlFor="message" className="contact__label">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows="7"
+              placeholder="Tell me about your project"
+              className="contact__input"
+            ></textarea>
+          </div>
+          <MagneticButton disabled={loading}>
+            <button
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full py-3 bg-cyan-400 text-neutral-900 rounded-lg font-medium hover:bg-cyan-300 transition-colors disabled:opacity-50"
+              className="button button--flex"
             >
               {loading ? "Sending..." : "Send Message"}
-            </motion.button>
-          </form>
-        </motion.div>
+              <i className="uil uil-message button__icon"></i>
+            </button>
+          </MagneticButton>
+        </form>
       </div>
     </section>
   );

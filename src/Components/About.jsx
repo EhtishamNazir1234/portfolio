@@ -1,43 +1,50 @@
-import React from "react";
-import profilePic from"../assets/image2.jpg"
-import { useTheme } from "../context/ThemeContext";
-import { getThemeClasses } from "../utils/themeClasses";
+import { site } from "../data/portfolioData";
+import MagneticButton from "./MagneticButton";
 
 const About = () => {
-  const { isDark } = useTheme();
-  const theme = getThemeClasses(isDark);
+  const downloadResume = () => {
+    const link = document.createElement("a");
+    link.href = site.resumePath;
+    link.download = "EhtishamNazirResume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <section className={`${theme.background} ${theme.text}`}>
-      <div className="py-24 max-w-6xl mx-auto px-4">
-        <h1 className=" text-center text-4xl">
-          About <span className="text-neutral-500">Me</span>
-        </h1>
-        <div className="flex flex-wrap">
-          <div className="w-full lg:w-1/2 lg:p-8">
-            <div className="flex items-center justify-center">
-              <img
-                className="rounded-2xl h-80 w-auto"
-                src={profilePic}
-                alt="aboutimg"
-              />
-            </div>
+    <section className="about section" id="about">
+      <h2 className="section__title">About Me</h2>
+      <span className="section__subtitle">My introduction</span>
+
+      <div className="about__container container grid">
+        <img
+          src={site.profiles.about}
+          alt={site.fullName}
+          className="about__img"
+        />
+
+        <div className="about__data">
+          <p className="about__description">{site.aboutDescription}</p>
+
+          <div className="about__info">
+            {site.stats.map((stat) => (
+              <div key={stat.name}>
+                <span className="about__info-title">{stat.title}</span>
+                <span
+                  className="about__info-name"
+                  dangerouslySetInnerHTML={{ __html: stat.name }}
+                />
+              </div>
+            ))}
           </div>
-          <div className="w-full lg:w-1/2">
-            <div className="flex justify-center lg:justify-start">
-              <p className="mx-6 mt-10 lg:mx-20 lg:mt-20 text-wrap text-justify">
-                Ehtisham Nazir here, a passionate software developer with a BS
-                in IT from M.A.O Postgraduate College (affiliated with the
-                University of the Punjab). I bring a blend of skills in React,
-                graphic design, office management, and hardware maintenance. My
-                journey in tech has driven me to explore software development,
-                where I apply my technical and creative skills to build
-                functional and engaging applications. With a commitment to
-                continuous learning and excellence, I’m eager to take on
-                projects that challenge my abilities and allow me to contribute
-                meaningful solution
-              </p>
-            </div>
+
+          <div className="about__buttons">
+            <MagneticButton>
+              <button type="button" className="button button--flex" onClick={downloadResume}>
+                Download CV
+                <i className="uil uil-download-alt button__icon"></i>
+              </button>
+            </MagneticButton>
           </div>
         </div>
       </div>

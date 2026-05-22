@@ -1,8 +1,1 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.active {
-  color: rgb(34 211 238); /* tailwind cyan-400 */
-}
+/* Alexa portfolio styles are in ./styles/alexa.css */
