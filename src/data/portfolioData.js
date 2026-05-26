@@ -12,9 +12,9 @@ export const site = {
   aboutDescription:
     "Ehtisham Nazir is a passionate software developer with a BS in IT from M.A.O Postgraduate College (University of the Punjab). Skilled in React, Node.js, MongoDB, and modern UI development, with experience in graphic design and delivering functional, engaging web applications.",
   social: {
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/ehtisham-nazir-7aa549247/",
     github: "https://github.com/EhtishamNazir1234",
-    dribbble: "https://github.com/EhtishamNazir1234",
+    dribbble: "https://dribbble.com/ehtisham-nazir",
   },
   stats: [
     { title: "02+", name: "Years <br> experience" },

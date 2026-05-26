@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { services } from "../data/portfolioData";
 import MagneticButton from "./MagneticButton";
+import ServicesHoverGlow from "./ServicesHoverGlow";
 
 const Services = () => {
   const [activeModal, setActiveModal] = useState(null);
@@ -10,26 +11,28 @@ const Services = () => {
       <h2 className="section__title">Services</h2>
       <span className="section__subtitle">What I offer</span>
 
-      <div className="services__container container grid">
-        {services.map((service, index) => (
-          <div key={service.title} className="services__content">
-            <div>
-              <i className={`${service.icon} services__icon`}></i>
-              <h3 className="services__title">{service.title}</h3>
+      <div className="services__container container">
+        <ServicesHoverGlow className="services__hover-layout">
+          {services.map((service, index) => (
+            <div key={service.title} className="services__content">
+              <div>
+                <i className={`${service.icon} services__icon`}></i>
+                <h3 className="services__title">{service.title}</h3>
+              </div>
+              <MagneticButton className="services__button-wrap">
+                <span
+                  className="services__button"
+                  onClick={() => setActiveModal(index)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  View More
+                  <i className="uil uil-arrow-right services__button-icon"></i>
+                </span>
+              </MagneticButton>
             </div>
-            <MagneticButton className="services__button-wrap">
-              <span
-                className="services__button"
-                onClick={() => setActiveModal(index)}
-                role="button"
-                tabIndex={0}
-              >
-                View More
-                <i className="uil uil-arrow-right services__button-icon"></i>
-              </span>
-            </MagneticButton>
-          </div>
-        ))}
+          ))}
+        </ServicesHoverGlow>
       </div>
 
       {services.map((service, index) => (
