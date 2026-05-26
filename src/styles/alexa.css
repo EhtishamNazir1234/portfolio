@@ -523,12 +523,15 @@ img {
  justify-content: center;
  gap: 0.35rem;
  flex: 1;
+ position: relative;
 }
 
 .rn-desktop-link {
  border-radius: 999px;
  padding: 0.45rem 0.82rem;
  font-size: 0.88rem;
+ position: relative;
+ z-index: 1;
 }
 
 .rn-desktop-link:hover {
@@ -539,6 +542,20 @@ img {
 .rn-pill-dark-scrolled .rn-desktop-link,
 .rn-pill-dark-scrolled .rn-desktop-theme {
  color: var(--title-color);
+}
+
+.rn-nav-hover-bg {
+ position: absolute;
+ border-radius: 999px;
+ background: radial-gradient(
+   circle at 50% 30%,
+   hsla(var(--hue-color), 90%, 72%, 0.34),
+   hsla(var(--hue-color), 80%, 62%, 0.08) 65%,
+   transparent 100%
+ );
+ box-shadow: 0 0 28px hsla(var(--hue-color), 90%, 68%, 0.26);
+ pointer-events: none;
+ z-index: 0;
 }
 /*==================== HOME ====================*/
 .home__container {
@@ -1003,8 +1020,43 @@ img {
 /*==================== SERVICES ====================*/
 
 .services__container {
+ display: flex;
+ justify-content: center;
+ width: 100%;
+}
+
+.services__hover-layout {
+ width: min(100%, 780px);
+ display: grid;
  gap: 1.5rem;
- grid-template-columns: repeat(2, 1fr);
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ position: relative;
+ justify-items: stretch;
+ margin: 0 auto;
+}
+
+.services__hover-grid {
+ position: relative;
+}
+
+.services__hover-bg {
+ position: absolute;
+ border-radius: 0.25rem;
+ background: radial-gradient(
+   circle at 50% 30%,
+   hsla(var(--hue-color), 90%, 72%, 0.36),
+   hsla(var(--hue-color), 80%, 60%, 0.08) 55%,
+   transparent 90%
+ );
+ box-shadow: 0 0 42px hsla(var(--hue-color), 90%, 70%, 0.3);
+ pointer-events: none;
+ z-index: 0;
+}
+
+.services__hover-item {
+ position: relative;
+ z-index: 1;
+ width: 100%;
 }
 
 .services__content {
@@ -1560,6 +1612,11 @@ body.dark-theme .contact__content:focus-within .contact__input {
  }
 
  .services__container {
+ display: flex;
+ justify-content: center;
+ }
+ .services__hover-layout {
+ width: auto;
  grid-template-columns: max-content;
  justify-content: center;
  }
@@ -1721,8 +1778,14 @@ body.dark-theme .contact__content:focus-within .contact__input {
  }
 
  .services__container {
+ display: flex;
+ justify-content: center;
+ }
+ .services__hover-layout {
+ width: auto;
  grid-template-columns: repeat(3, 218px);
  justify-content: center;
+ justify-items: center;
  }
  .services__icon {
  font-size: 2rem;
@@ -1805,7 +1868,14 @@ body.dark-theme .contact__content:focus-within .contact__input {
  }
 
  .services__container {
+ display: flex;
+ justify-content: center;
+ }
+ .services__hover-layout {
+ width: auto;
  grid-template-columns: repeat(3, 238px);
+ justify-content: center;
+ justify-items: center;
  }
 
  .portfolio__content {

@@ -29,3 +29,4 @@ _reference-alexa/
 temp_interactive_push.bat
 config.bat
 .env.example
+branch_structure.json

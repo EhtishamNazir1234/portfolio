@@ -7,7 +7,7 @@ import Qualification from "./Components/Qualification";
 import Services from "./Components/Services";
 import Portfolio from "./Components/Portfolio";
 import Project from "./Components/Project";
-import Testimonial from "./Components/Testimonial";
+// import Testimonial from "./Components/Testimonial";
 import Contact from "./Components/Contact";
 import Footer from "./Components/Footer";
 import ScrollUp from "./Components/ScrollUp";
@@ -58,7 +58,7 @@ const AppContent = () => {
           <Services />
           <Portfolio />
           <Project />
-          <Testimonial />
+          {/* <Testimonial /> */}
           <Contact />
         </main>
         <Footer />

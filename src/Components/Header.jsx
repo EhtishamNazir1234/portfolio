@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { navLinks, site } from "../data/portfolioData";
 import { useTheme } from "../context/ThemeContext";
@@ -6,10 +6,32 @@ import { useTheme } from "../context/ThemeContext";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [desktopHoverIndex, setDesktopHoverIndex] = useState(null);
+  const [desktopHoverRect, setDesktopHoverRect] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  });
   const { isDark, toggleTheme } = useTheme();
   const { scrollY } = useScroll();
+  const desktopMenuRef = useRef(null);
 
   const closeMenu = () => setMenuOpen(false);
+
+  const updateDesktopHover = (index) => {
+    setDesktopHoverIndex(index);
+    if (!desktopMenuRef.current) return;
+    const links = desktopMenuRef.current.querySelectorAll(".rn-desktop-link");
+    const current = links[index];
+    if (!current) return;
+    setDesktopHoverRect({
+      left: current.offsetLeft,
+      top: current.offsetTop,
+      width: current.offsetWidth,
+      height: current.offsetHeight,
+    });
+  };
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 100);
@@ -84,12 +106,26 @@ const Header = () => {
             {site.name}
           </a>
 
-          <div className="nav__menu rn-desktop-menu" id="nav-menu-desktop">
-            {navLinks.map((link) => (
+          <div
+            className="nav__menu rn-desktop-menu"
+            id="nav-menu-desktop"
+            ref={desktopMenuRef}
+            onMouseLeave={() => setDesktopHoverIndex(null)}
+          >
+            {desktopHoverIndex !== null && (
+              <motion.span
+                className="rn-nav-hover-bg"
+                initial={false}
+                animate={desktopHoverRect}
+                transition={{ type: "spring", stiffness: 280, damping: 28 }}
+              />
+            )}
+            {navLinks.map((link, index) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
                 className={`nav__link rn-desktop-link ${link.id === "home" ? "active-link" : ""}`}
+                onMouseEnter={() => updateDesktopHover(index)}
               >
                 {link.label}
               </a>
